@@ -67,10 +67,12 @@ class InfowayApp():
             st.session_state.show_create_user_form = False
         if 'USERS' not in st.session_state:
             st.session_state.USERS = load_users()
-        if 'RESPONSIBILITIES' not in st.session_state or 'ROLES_MAP' not in st.session_state:
-                responsibilities, roles_map = load_roles_responsibilities()
-                st.session_state.RESPONSIBILITIES = responsibilities
-                st.session_state.ROLES_MAP = roles_map
+        if 'RESPONSIBILITIES' not in st.session_state:
+            responsibilities = load_responsibilities()
+            st.session_state.RESPONSIBILITIES = responsibilities
+        if 'ROLES_MAP' not in st.session_state:
+            roles_map=load_roles()
+            st.session_state.ROLES_MAP = roles_map
 
     def run(self):
         if not st.session_state.USERS:
@@ -112,40 +114,15 @@ class InfowayApp():
                     st.error("Invalid Username or Password")
             else:
                 st.error("Invalid Username or Password")
-
+    
     def admin_dashboard(self):
         # Scrolling Welcome Banner
         st.sidebar.markdown(
-            "<marquee behaviour='scroll' direction='left' scrollamount='5' style='color: red; font-size:20px; font-style: italic;'>Welcome to the Infoway Dashboard!</marquee>",
-            unsafe_allow_html=True,
-        )
+                "<marquee behaviour='scroll' direction='left' scrollamount='5' style='color: white; font-size:20px; font-style: italic;'>Welcome to the Infoway Dashboard!</marquee>",
+                unsafe_allow_html=True,
+            )
 
         st.header("Admin Panel")
-
-        # Initialize session state for admin menu
-        if "admin_menu_open" not in st.session_state:
-            st.session_state.admin_menu_open = False
-
-        # Admin Main Menu Toggle
-        if st.sidebar.button("🛠️ Admin Menu" ):
-            st.tw("Infoway Techno Soft Solutions")
-            st.session_state.admin_menu_open = not st.session_state.admin_menu_open
-            st.session_state.page = None  # Reset page when toggling
-
-        # If Admin Menu is expanded
-        if st.session_state.admin_menu_open:
-            with st.sidebar:
-                st.markdown("**Admin Options:**")
-                if st.button("🏠 DashBoard"):
-                    st.session_state.page = "admin_dashboard"
-                if st.button("🧩 Responsibilities"):
-                    st.session_state.page = "responsibilities"
-                if st.button("👥 Roles"):
-                    st.session_state.page = "roles"
-                if st.button("🙋 Users"):
-                    st.session_state.page = "users"
-
-        # ---------------- SALES MODULE ---------------- #
         st.sidebar.markdown("---")
         st.sidebar.markdown("### 📦 Sales Module")
 
