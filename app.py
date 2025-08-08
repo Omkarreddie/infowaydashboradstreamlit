@@ -11,33 +11,48 @@ import PyPDF2
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
-# This is pickling to dump and Load
+# This is pickling to dump and Loa
+
+# -------------------------- USERS --------------------------
 def save_users(users):
-    with open("USERS.pkl", "wb") as f:
+    with open("pickle_files/users.pkl", "wb") as f:
         pickle.dump(users, f)
 
 def load_users():
-    if os.path.exists("USERS.pkl"):
-        with open("USERS.pkl", "rb") as f:
+    if os.path.exists("pickle_files/users.pkl"):
+        with open("pickle_files/users.pkl", "rb") as f:
             users = pickle.load(f)
             if users:
                 return users
     return {}
 
-
-# roles and responsibilities
-def save_roles_responsibilities():
-    with open("roles_user.pkl", "wb") as f:
+# -------------------------- ROLES --------------------------
+def save_roles():
+    with open("pickle_files/roles.pkl", "wb") as f:
         pickle.dump({
-            "RESPONSIBILITIES": st.session_state.RESPONSIBILITIES,
             "ROLES_MAP": st.session_state.ROLES_MAP
         }, f)
-def load_roles_responsibilities():
-    if os.path.exists("roles_user.pkl"):
-        with open("roles_user.pkl", "rb") as f:
+
+def load_roles():
+    if os.path.exists("pickle_files/roles.pkl"):
+        with open("pickle_files/roles.pkl", "rb") as f:
             data = pickle.load(f)
-            return data.get("RESPONSIBILITIES", set()), data.get("ROLES_MAP", {})
-    return set(), {}
+            return data.get("ROLES_MAP", {})
+    return {}
+
+# -------------------------- RESPONSIBILITIES --------------------------
+def save_responsibilities():
+    with open("pickle_files/responsibilities.pkl", "wb") as f:
+        pickle.dump({
+            "RESPONSIBILITIES": st.session_state.RESPONSIBILITIES
+        }, f)
+
+def load_responsibilities():
+    if os.path.exists("pickle_files/responsibilities.pkl"):
+        with open("pickle_files/responsibilities.pkl", "rb") as f:
+            data = pickle.load(f)
+            return data.get("RESPONSIBILITIES", {})
+    return {}
 
 # -------------------------- Main App Class --------------------------
 class InfowayApp():
