@@ -404,15 +404,14 @@ class InfowayApp():
         st.session_state.role = ""
         st.session_state.page = "home"
         st.success("Logged out successfully!")
-        st.rerun()
-
+        st.rerun()   
     # -------------------------- Sales Chart Example --------------------------
     def show_sales_chart(self):
         st.subheader("Sales Data Charts")
-        if not os.path.exists("sales_data.csv"):
+        if not os.path.exists("data/sales_data.csv"):
             st.error("Your file does not exist")
             return
-        df = pd.read_csv("sales_data.csv")
+        df = pd.read_csv("data/sales_data.csv")
         st.dataframe(df)
         st.bar_chart(data=df, x="City", y="Total")
         data = {
